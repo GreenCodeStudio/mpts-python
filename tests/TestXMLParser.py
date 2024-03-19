@@ -67,15 +67,22 @@ describe('XMLParser', () => {
 """
 import unittest
 
-from isEven import isEven
+from mpts.nodes.TDocumentFragment import TDocumentFragment
+from .context import mpts
 
 from mpts.parser import XMLParser
-from tests.UniParserTest import TestUniParser
 
 
-class TestXMLParser(TestUniParser):
+class TestXMLParser():
     def __init__(self):
-        super().__init__(XMLParser)
+        self.parser = XMLParser
+        pass;
+
+    def test_basicTest(self):
+        obj = self.parser.Parse("Hello, world!")
+        self.assertIsInstance(obj, TDocumentFragment)
+        self.assertIsInstance(obj.children[0], TText)
+        self.assertEqual(obj.children[0].text, "Hello, world!")
 
 if __name__ == '__main__':
     unittest.main()
