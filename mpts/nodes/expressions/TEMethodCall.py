@@ -26,6 +26,8 @@ export class TEMethodCall extends TEExpression {
 }
 """
 class TEMethodCall:
-    def __init__(self, source, args):
+    def __init__(self, source, args=None):
+        if args is None:
+            args = []
         self.source = source
         self.args = args

@@ -173,7 +173,7 @@ class ExpressionParser(AbstractParser):
             elif re.search(r'[0-9\.]', char):
                 self.position += 1
                 value = char + self.readUntill(r'[^0-9\.e]')
-                lastNode = TENumber(+value)
+                lastNode = TENumber(float(value))
             elif char == '"':
                 self.position += 1
                 value = self.readUntill(r'"')
