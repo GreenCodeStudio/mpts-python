@@ -68,6 +68,7 @@ describe('XMLParser', () => {
 import unittest
 
 from mpts.nodes.TDocumentFragment import TDocumentFragment
+from mpts.nodes.TText import TText
 from .context import mpts
 
 from mpts.parser import XMLParser

@@ -167,6 +167,7 @@ export function UniParserTest(parser){
 import unittest
 
 from mpts.nodes.TDocumentFragment import TDocumentFragment
+from mpts.nodes.TText import TText
 
 
 class TestUniParser(unittest.TestCase):

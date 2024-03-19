@@ -11,7 +11,7 @@ constructor(message, line, column, sample) {
 """
 class MptsParserError(Exception):
     def __init__(self, message, line, column, sample):
-        super().__init__(f"{message}\r\n{sample.replace('\n', '\\n')}\r\n{line}:{column}")
+        super().__init__(f"{message}\r\n{sample}\r\n{line}:{column}")
         self.messageRaw = message
         self.line = line
         self.column = column
