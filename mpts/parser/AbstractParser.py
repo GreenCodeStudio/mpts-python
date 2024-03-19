@@ -1,60 +1,28 @@
-"""
-import {MptsParserError} from "./MptsParserError";
 
-export class AbstractParser {
-
-    readUntill(regexp) {
-        let ret = '';
-        while (this.position < this.text.length) {
-            const char = this.text[this.position];
-            if (regexp.test(char))
-                break;
-            ret += char;
-            this.position++;
-        }
-        return ret;
-    }
-
-    skipWhitespace() {
-        this.readUntill(/\S/)
-    }
-
-    readUntillText(text) {
-        let ret = '';
-        while (this.position < this.text.length) {
-            const char = this.text[this.position];
-            if (this.text.substr(this.position, text.length) == text)
-                break;
-            ret += char;
-            this.position++;
-        }
-        return ret;
-    }
-
-    throw(message) {
-        let lines = this.text.substr(0, this.position).split('\n');
-        throw new MptsParserError(message, lines.length, lines[lines.length - 1].length, this.text.substr(this.position, 10))
-    }
-}
-"""
 import re
+
+from mpts.parser.MptsParserError import MptsParserError
 
 
 class AbstractParser:
-    def readUntill(self, regexp):
+    def __init__(self, text, position=0):
+        self.text = text
+        self.position = position
+
+    def readUntil(self, regexp):
         ret = ''
         while self.position < len(self.text):
             char = self.text[self.position]
-            if re.match(regexp,char):
+            if re.match(regexp, char):
                 break
             ret += char
             self.position += 1
         return ret
 
     def skipWhitespace(self):
-        self.readUntill(r'\S')
+        self.readUntil(r'\S')
 
-    def readUntillText(self, text):
+    def readUntilText(self, text):
         ret = ''
         while self.position < len(self.text):
             char = self.text[self.position]

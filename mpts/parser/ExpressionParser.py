@@ -32,20 +32,20 @@ export class ExpressionParser extends AbstractParser {
                 this.position++;
             } else if (lastNode && char == '.') {
                 this.position++;
-                let name = this.readUntill(/['"\(\)=\.:\s>+\-*?]/);
+                let name = this.readUntil(/['"\(\)=\.:\s>+\-*?]/);
                 lastNode = new TEProperty(lastNode, name);
             } else if (/[0-9\.]/.test(char)) {
                 this.position++;
-                let value = char+this.readUntill(/[^0-9\.e]/);
+                let value = char+this.readUntil(/[^0-9\.e]/);
                 lastNode = new TENumber(+value);
             } else if (char == '"') {
                 this.position++;
-                let value = this.readUntill(/"/);
+                let value = this.readUntil(/"/);
                 this.position++;
                 lastNode = new TEString(value);
             } else if (char == "'") {
                 this.position++;
-                let value = this.readUntill(/'/);
+                let value = this.readUntil(/'/);
                 this.position++;
                 lastNode = new TEString(value);
             } else if (char == "(") {
@@ -120,7 +120,7 @@ export class ExpressionParser extends AbstractParser {
                 if (lastNode) {
                     break;
                 }
-                let name = this.readUntill(/['"\(\)=\.\s:>/+\-*?,]/);
+                let name = this.readUntil(/['"\(\)=\.\s:>/+\-*?,]/);
                 if (name == 'true')
                     lastNode = new TEBoolean(true)
                 else if (name == 'false')
@@ -153,8 +153,7 @@ from mpts.parser.AbstractParser import AbstractParser
 
 class ExpressionParser(AbstractParser):
     def __init__(self, text):
-        self.text = text
-        self.position = 0
+        super().__init__(text)
 
     @staticmethod
     def Parse(text, endLevel=0):
@@ -168,20 +167,20 @@ class ExpressionParser(AbstractParser):
                 self.position += 1
             elif lastNode and char == '.':
                 self.position += 1
-                name = self.readUntill(r"['\"\(\)=\.:\s>+\-*?]")
+                name = self.readUntil(r"['\"\(\)=\.:\s>+\-*?]")
                 lastNode = TEProperty(lastNode, name)
             elif re.search(r'[0-9\.]', char):
                 self.position += 1
-                value = char + self.readUntill(r'[^0-9\.e]')
+                value = char + self.readUntil(r'[^0-9\.e]')
                 lastNode = TENumber(float(value))
             elif char == '"':
                 self.position += 1
-                value = self.readUntill(r'"')
+                value = self.readUntil(r'"')
                 self.position += 1
                 lastNode = TEString(value)
             elif char == "'":
                 self.position += 1
-                value = self.readUntill(r"'")
+                value = self.readUntil(r"'")
                 self.position += 1
                 lastNode = TEString(value)
             elif char == "(":
@@ -246,7 +245,7 @@ class ExpressionParser(AbstractParser):
             else:
                 if lastNode:
                     break
-                name = self.readUntill(r"['\"\(\)=\.\s:>/+\-*?,]")
+                name = self.readUntil(r"['\"\(\)=\.\s:>/+\-*?,]")
                 if name == 'true':
                     lastNode = TEBoolean(True)
                 elif name == 'false':
