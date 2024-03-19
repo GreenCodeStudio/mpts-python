@@ -190,7 +190,7 @@ class ExpressionParser(AbstractParser):
                     self.skipWhitespace()
                     while self.text[self.position] != ')':
                         if self.position >= len(self.text):
-                            raise Error('Unexpected end of input')
+                            self.throw('Unexpected end of input')
                         value = self.parseNormal(2)
                         lastNode.args.append(value)
                         if self.text[self.position] == ',':
@@ -205,7 +205,7 @@ class ExpressionParser(AbstractParser):
                 if endLevel >= 1:
                     break
                 else:
-                    raise Error("( not opened")
+                    self.throw("( not opened")
             elif char == "=" and self.text[self.position + 1] == "=":
                 self.position += 2
                 right = self.parseNormal(2)
@@ -220,7 +220,7 @@ class ExpressionParser(AbstractParser):
                 if endLevel >= 2:
                     break
                 else:
-                    raise Error("Unexpected character")
+                    self.throw("Unexpected character")
             elif char == "+":
                 if endLevel >= 4:
                     break
@@ -241,7 +241,7 @@ class ExpressionParser(AbstractParser):
                 if lastNode:
                     break
                 else:
-                    raise Error("Unexpected character")
+                    self.throw("Unexpected character")
             else:
                 if lastNode:
                     break
